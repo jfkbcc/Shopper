@@ -1,0 +1,9 @@
+.idea/*
+..gitignore.swp
+.vs/
+*.swp
+lib/obj/
+lib/bin/
+web/obj/
+web/bin/
+web/sqlite.db

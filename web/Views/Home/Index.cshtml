@@ -1,0 +1,358 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <p>@Html.Raw(@ViewData["some"])</p>
+</div>
+
+<div class="p-2">
+    <!-- Category page -->
+    <div id="categoryPage" class="d-none w-100">
+        <h1>Category Page</h1>
+    </div>
+
+    <!-- Product page -->
+    <div id="productPage" class="d-none w-100">
+        <h1>Product Page</h1>
+    </div>
+
+    <!-- View cart page -->
+    <div id="viewCartPage" class="d-none w-100">
+        <div class="row">
+            <div class="col-md-8 offset-md-1">
+                <h4 class="mr-1 mb-3">View Cart Page</h4>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Bicycle</h6>
+                            <small class="text-muted">Blue</small>
+                        </div>
+                        <span class="text-muted">$50</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Spinning Rims</h6>
+                            <small class="text-muted">Glows in the dark!</small>
+                        </div>
+                        <span class="text-muted">$20</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Training Wheels</h6>
+                            <small class="text-muted">You'll chuck these in a week</small>
+                        </div>
+                        <span class="text-muted">$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>$75</strong>
+                    </li>
+                </ul>
+
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="changePage('checkoutaddress');">Continue to Checkout</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout address page -->
+    <div id="checkoutAddressPage" class="d-none w-100">
+        <div class="row">
+            <div class="col-md-8 offset-md-1">
+                <h4 class="mb-3">Address Page</h4>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label>Email Address</label>
+                        <input type="text" name="email" class="form-control" maxlength="70" id="email-address" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>First Name</label>
+                        <input type="text" name="fname" class="form-control" maxlength="70" id="firstname" autocomplete="given-name" required>
+                    </div>
+                    <div class="col-md-6">
+                        <label>Last Name</label>
+                        <input type="text" name="lname" class="form-control" maxlength="70" id="lastname" autocomplete="family-name" required>
+                    </div>
+                </div>
+
+                <div class="row mb-3">
+                    <div class="col-md-12">
+                        <label>Street Address</label>
+                        <input type="text" name="address-line1" class="form-control" maxlength="70" id="street-address" required>
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col-md-6">
+                        <label>City</label>
+                        <input type="text" name="address-line1" class="form-control" maxlength="70" id="city-address" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label>State</label>
+                        <input type="text" name="state" class="form-control" maxlength="70" id="state-address" required>
+                    </div>
+                    <div class="col-md-3">
+                        <label>Zipcode</label>
+                        <input type="text" name="postcode" class="form-control" maxlength="70" id="zip-address" required>
+                    </div>
+                </div>
+                <hr>
+                <h4 class="mb-3">Shipping Method</h4>
+
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="shipping" id="shippingRadio1" value="free" checked>
+                    <label class="form-check-label w-100" for="shippingRadio1">
+                        <div class="row">
+                            <div class="col-8">Free Economy Shipping</div>
+                            <div class="col-4 text-right">$0.00</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="shipping" id="shippingRadio2" value="3day">
+                    <label class="form-check-label w-100" for="shippingRadio2">
+                        <div class="row">
+                            <div class="col-8">3 Day Delivery</div>
+                            <div class="col-4 text-right">$6.95</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="shipping" id="shippingRadio3" value="2day">
+                    <label class="form-check-label w-100" for="shippingRadio3">
+                        <div class="row">
+                            <div class="col-8">2 Day Delivery</div>
+                            <div class="col-4 text-right">$9.95</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="shipping" id="shippingRadio4" value="1day">
+                    <label class="form-check-label w-100" for="shippingRadio4">
+                        <div class="row">
+                            <div class="col-8">1 Day Delivery</div>
+                            <div class="col-4 text-right">$14.95</div>
+                        </div>
+                    </label>
+                </div>
+
+                <div class="form-check mb-1">
+                    <input class="form-check-input" type="radio" name="shipping" id="shippingRadio5" value="0day">
+                    <label class="form-check-label w-100" for="shippingRadio5">
+                        <div class="row">
+                            <div class="col-8">Same Day Delivery</div>
+                            <div class="col-4 text-right">$29.95</div>
+                        </div>
+                    </label>
+                </div>
+                <br>
+                <div>
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="changePage('checkoutpayment');">Continue checkout</button>
+                </div>
+            </div>
+            <div class="col-md-3 d-none d-md-block">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Bicycle</h6>
+                            <small class="text-muted">Blue</small>
+                        </div>
+                        <span class="text-muted">$50</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Spinning Rims</h6>
+                            <small class="text-muted">Glows in the dark!</small>
+                        </div>
+                        <span class="text-muted">$20</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Training Wheels</h6>
+                            <small class="text-muted">You'll chuck these in a week</small>
+                        </div>
+                        <span class="text-muted">$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>$75</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout payment page -->
+    <div id="checkoutPaymentPage" class="d-none w-100">
+        <div class="row">
+            <div class="col-md-8 offset-md-1">
+                <h4 class="mb-3">Payment Page</h4>
+
+                <div class="form-group">
+                    <label for="authorizenet_aim-cc-owner">Cardholder Name:</label>
+                    <input name="cardHolder" type="text" id="authorizenet_aim-cc-owner" class="form-control" autocomplete="off" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="cardNumber">Credit Card Number:</label>
+                    <input name="cardNumber" type="text" id="cardNumber" class="form-control" autocomplete="off" required>
+                </div>
+                <div class="row form-group">
+                    <div class="col-8">
+                        <label>Exp. Month</label>
+                        <select name="expiryMonth" id="authorizenet_aim-cc-expires-month" class="form-control" required>
+                            <option value="01">January - (01)</option>
+                            <option value="02">February - (02)</option>
+                            <option value="03">March - (03)</option>
+                            <option value="04">April - (04)</option>
+                            <option value="05">May - (05)</option>
+                            <option value="06">June - (06)</option>
+                            <option value="07">July - (07)</option>
+                            <option value="08">August - (08)</option>
+                            <option value="09">September - (09)</option>
+                            <option value="10">October - (10)</option>
+                            <option value="11">November - (11)</option>
+                            <option value="12">December - (12)</option>
+                        </select>
+                    </div>
+                    <div class="col-4 nopadding-left">
+                        <label>Exp. Year</label>
+                        <select name="expiryYear" id="cc-expiry-year" class="form-control" required>
+                            <option value="2020">2020</option>
+                            <option value="2021">2021</option>
+                            <option value="2022">2022</option>
+                            <option value="2023">2023</option>
+                            <option value="2024">2024</option>
+                            <option value="2025">2025</option>
+                            <option value="2026">2026</option>
+                            <option value="2027">2027</option>
+                            <option value="2028">2028</option>
+                            <option value="2029">2029</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="changePage('checkoutconfirm');">Continue checkout</button>
+                </div>
+            </div>
+            <div class="col-md-3 d-none d-md-block">
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Bicycle</h6>
+                            <small class="text-muted">Blue</small>
+                        </div>
+                        <span class="text-muted">$50</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Spinning Rims</h6>
+                            <small class="text-muted">Glows in the dark!</small>
+                        </div>
+                        <span class="text-muted">$20</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Training Wheels</h6>
+                            <small class="text-muted">You'll chuck these in a week</small>
+                        </div>
+                        <span class="text-muted">$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>$75</strong>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout confirm page -->
+    <div id="checkoutConfirmPage" class="d-none w-100">
+        <div class="row">
+            <div class="col-md-8 offset-md-1">
+                <h4 class="mb-3">Confirm Page</h4>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6 class="font-weight-bold">Shipping address</h6>
+                        <address class="mb-1">
+                            John Doe<br>
+                            2800 Victory Blvd<br>
+                            Staten Island, New York 10314<br>
+                            United States
+                        </address>
+                        <div class="d-block"><b>Shipping:</b> 1 Day Delivery</div>
+                    </div>
+                    <div class="col-md-4">
+                        <h6 class="font-weight-bold">Billing address</h6>
+                        <address class="mb-1">
+                            John Doe<br>
+                            2800 Victory Blvd<br>
+                            Staten Island, New York 10314<br>
+                            United States
+                        </address>
+                        <div class="d-block"><b>Payment:</b> <b>Visa</b> ending in 1234</div>
+                    </div>
+                </div>
+                <hr />
+                <h6 class="text-center mr-1 mb-3">Your Shopping Cart</h6>
+                <ul class="list-group mb-3">
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Bicycle</h6>
+                            <small class="text-muted">Blue</small>
+                        </div>
+                        <span class="text-muted">$50</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Spinning Rims</h6>
+                            <small class="text-muted">Glows in the dark!</small>
+                        </div>
+                        <span class="text-muted">$20</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between lh-condensed">
+                        <div>
+                            <h6 class="my-0">Training Wheels</h6>
+                            <small class="text-muted">You'll chuck these in a week</small>
+                        </div>
+                        <span class="text-muted">$5</span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between">
+                        <span>Total (USD)</span>
+                        <strong>$75</strong>
+                    </li>
+                </ul>
+
+
+                <hr />
+                <div class="mt-2">
+                    <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="changePage('checkoutend');">Confirm Checkout</button>
+                </div>
+            </div>
+            <div class="col-md-3 d-none d-md-block">
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout end page -->
+    <div id="checkoutEndPage" class="d-none w-100">
+        Success
+        <div class="mt-2">
+            <button class="btn btn-primary btn-lg btn-block" type="submit" onclick="changePage('viewcart');">Restart</button>
+        </div>
+    </div>
+</div>
