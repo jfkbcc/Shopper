@@ -14,6 +14,8 @@ namespace ShoppingLibrary.Models
 
         public virtual Product Product { get; set; }
 
+        public int ShoppingCartID { get; set; }
+
         public virtual ShoppingCart ShoppingCart { get; set; }
     }
 }

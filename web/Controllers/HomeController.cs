@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using WebApplication1.Models;
 using Microsoft.AspNetCore.Http;
+using ShoppingLibrary.Models;
 
 namespace WebApplication1.Controllers
 {
@@ -22,8 +23,18 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
-            //HttpContext.Session.SetString("asd", "fgh");
-            ViewData["some"] = Class1.someFunction();
+            if (!CheckAuthentication())
+                return View();
+
+            var customerId = HttpContext.Session.GetInt32("customer");
+            if (customerId != null)
+            {
+                var dbcon = ShoppingContextFactory.get();
+
+                Customer c = dbcon.Customers.Find(customerId);
+                ViewData["Customer"] = c;
+            }
+
             return View();
         }
 
@@ -36,6 +47,22 @@ namespace WebApplication1.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        private bool CheckAuthentication()
+        {
+            var customerId = HttpContext.Session.GetInt32("customer");
+            if (customerId != null)
+            {
+                var dbcon = ShoppingContextFactory.get();
+
+                Customer customer = dbcon.Customers.Find(customerId);
+                if (customer != null)
+                    return true;
+            }
+
+            HttpContext.Response.Redirect("/Login");
+            return false;
         }
     }
 }

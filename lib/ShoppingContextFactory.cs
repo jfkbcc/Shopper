@@ -33,5 +33,16 @@ namespace ShoppingLibrary
 
             return new DatabaseContext(optionsBuilder.Options);
         }
+
+        private static DatabaseContext singleDbContext = null;
+
+        public static DatabaseContext get()
+        {
+            /*if (singleDbContext == null)
+                singleDbContext = new ShoppingContextFactory().CreateDbContext(null);
+
+            return singleDbContext;*/
+            return new ShoppingContextFactory().CreateDbContext(null);
+        }
     }
 }

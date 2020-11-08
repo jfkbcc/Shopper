@@ -1,0 +1,27 @@
+﻿@using ShoppingLibrary.Models
+@{
+    ViewData["Title"] = "Product Page";
+    Product product = (Product)ViewData["Product"];
+}
+
+<div class="text-center">
+    <h1 class="display-4">@product.Name</h1>
+</div>
+
+<div class="w-100">
+    <div class="row">
+        <div class="col-md-4">
+            <img src="@product.Image" alt="@product.Name" width="200" />
+        </div>
+        <div class="col-md-8" style="margin-top: 50px">
+            <p>@product.Description</p>
+            <p>Price: $@product.Price</p>
+            <div class="mt-2">
+                <form method="post" action="/Cart/AddToCart" enctype="application/x-www-form-urlencoded">
+                    <input type="hidden" name="product" value="@product.ID" />
+                    <button class="btn btn-primary btn-lg btn-block" type="submit">Add to Cart</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,44 @@
+﻿@using ShoppingLibrary.Models
+@{
+    ViewData["Title"] = "Product Listing";
+}
+
+<style>
+    img {
+        height: 170px;
+        width: 140px
+    }
+</style>
+
+<script>
+    function gotoProductPage(id) {
+        window.location.href = "/Product/View/" + id;
+    }
+</script>
+
+<div class="text-center">
+    <h1 class="display-4">Product Listing</h1>
+</div>
+
+<div class="w-100">
+    <div class="row">
+        @foreach (var product in (IEnumerable<Product>)ViewData["Products"])
+        {
+            <ul class="list-group shadow mb-2 w-100" onclick="gotoProductPage(@product.ID); return;">
+                <!-- list group item-->
+                <li class="list-group-item">
+                    <!-- Custom content-->
+                    <div class="media align-items-lg-center flex-column flex-lg-row p-3">
+                        <div class="media-body order-2 order-lg-1">
+                            <h5 class="mt-0 font-weight-bold mb-2">@product.Name</h5>
+                            <p class="font-italic text-muted mb-0 small">@product.Description</p>
+                            <div class="d-flex align-items-center justify-content-between mt-1">
+                                <h6 class="font-weight-bold my-2">$@product.Price</h6>
+                            </div>
+                        </div><img src="@product.Image" alt="@product.Name" width="200" class="ml-lg-5 order-1 order-lg-2">
+                    </div> <!-- End -->
+                </li> <!-- End -->
+            </ul>
+        }
+    </div>
+</div>

@@ -1,14 +1,22 @@
-﻿@{
+﻿@using ShoppingLibrary.Models;
+@{
     ViewData["Title"] = "Home Page";
+    Customer customer = (Customer)ViewData["Customer"];
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-    <p>@Html.Raw(@ViewData["some"])</p>
 </div>
 
-<div class="p-2">
+@if (customer != null)
+{
+    <div class="text-center">
+        <p>Hello @customer.Name</p>
+        <p>Your Email Address: @customer.Email</p>
+    </div>
+}
+
+<div class="p-2 d-none">
     <!-- Category page -->
     <div id="categoryPage" class="d-none w-100">
         <h1>Category Page</h1>
