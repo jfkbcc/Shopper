@@ -41,6 +41,13 @@ namespace WebApplication1.Controllers
 
         public ActionResult Confirm()
         {
+            var customerId = HttpContext.Session.GetInt32("customer");
+            if (customerId != null)
+            {
+                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
+                if (cartManager != null)
+                    ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
+            }
             return View();
         }
         public ActionResult PlaceOrder()

@@ -65,11 +65,11 @@ namespace WebApplication1.Controllers
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
-                CartManager cartManager = CustomerManager.GetCustomerCart((int)customerId);
-                if (cartManager != null){
-                    cartManager.shoppingCart = new ShoppingCart();
-                }
+                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
+                if (cartManager != null)
+                   cartManager.EmptyCart();
             }
+            HttpContext.Response.Redirect("/Home/Index");
         }
     }
 }

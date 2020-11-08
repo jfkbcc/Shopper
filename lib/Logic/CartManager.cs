@@ -79,5 +79,11 @@ namespace ShoppingLibrary.Logic
             this.context.SaveChanges();
             return true;
         }
+
+        public void EmptyCart()
+        {
+            this.shoppingCart.Items.Clear();
+            this.context.SaveChanges();
+        }
     }
 }

@@ -13,7 +13,7 @@
 
 
     <h2>Items</h2>
-
+    
     @foreach (var product in cartItems)
     {
         <!-- list group item-->
@@ -36,7 +36,7 @@
 
 
 
-
+    
     <h2>Shipping</h2>
     <div class="form-check mb-1">
         <div class="form-check mb-1">
@@ -94,7 +94,7 @@
     @{ decimal total = 0;
         foreach (var product in cartItems)
         {
-            total += product.Product.Price;
+            total += product.Product.Price * product.Quantity;
         }
         <h2>Grand total: @total</h2>
     }
