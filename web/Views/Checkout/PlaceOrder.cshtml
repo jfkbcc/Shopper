@@ -1,0 +1,29 @@
+﻿@using ShoppingLibrary.Models;
+@{
+    ViewData["Title"] = "Login";
+    Customer customer = (Customer)ViewData["Customer"];
+}
+
+
+
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Confirmation Page</title>
+</head>
+<body>
+
+    <h1>Order successfully placed!</h1>
+
+    @if (customer != null)
+    {
+        <div class="text-center">
+            <p>Thank you @customer.Name !</p>
+        </div>
+    }
+
+    <form method="post" action="/Home" >
+        <button class="btn btn-primary btn-lg btn-block" type="submit"> Return home </button>
+    </form>
+
+</body>
+

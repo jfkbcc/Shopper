@@ -51,5 +51,17 @@ namespace WebApplication1.Controllers
 
             HttpContext.Response.Redirect("/Cart/Index");
         }
+
+        public void Empty()
+        {
+            var customerId = HttpContext.Session.GetInt32("customer");
+            if (customerId != null)
+            {
+                CartManager cartManager = CustomerManager.GetCustomerCart((int)customerId);
+                if (cartManager != null){
+                    cartManager.shoppingCart = new ShoppingCart();
+                }
+            }
+        }
     }
 }

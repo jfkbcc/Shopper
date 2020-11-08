@@ -35,6 +35,14 @@ namespace WebApplication1.Controllers
         {
             return View();
         }
+        public ActionResult PlaceOrder()
+        {
+            // empty cart
+            // (charge account)
+            // show order successfully placed page
+
+            return View();
+        }
 
         // GET: Checkout/Create
         public ActionResult Create()
