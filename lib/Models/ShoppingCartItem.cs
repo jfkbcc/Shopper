@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
 namespace ShoppingLibrary.Models
 {
+    [Table("ShoppingCartItem")]
     public class ShoppingCartItem
     {
         public int ID { get; set; }

@@ -23,6 +23,8 @@ namespace ShoppingLibrary
 
         public virtual DbSet<ShoppingCart> ShoppingCart { get; set; }
 
+        public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ShoppingCart>()

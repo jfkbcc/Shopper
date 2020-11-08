@@ -83,6 +83,7 @@ namespace ShoppingLibrary.Logic
         public void EmptyCart()
         {
             this.shoppingCart.Items.Clear();
+            //this.context.ShoppingCartItems.RemoveRange(this.shoppingCart.Items);
             this.context.SaveChanges();
         }
     }
