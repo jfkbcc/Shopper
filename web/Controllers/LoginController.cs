@@ -24,6 +24,13 @@ namespace WebApplication1.Controllers
 
     public class LoginController : Controller
     {
+        private readonly DatabaseContext dbContext;
+
+        public LoginController(DatabaseContext context)
+		{
+            dbContext = context;
+		}
+
         public IActionResult Index()
         {
             return View();
@@ -40,7 +47,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid && authenticateModel != null)
             {
-                Customer customer = CustomerManager.GetCustomerByEmail(authenticateModel.Email);
+                Customer customer = CustomerManager.GetCustomerByEmail(dbContext, authenticateModel.Email);
                 if (customer != null)
                 {
                     HttpContext.Session.SetInt32("customer", customer.ID);
@@ -57,9 +64,7 @@ namespace WebApplication1.Controllers
         {
             if (ModelState.IsValid && registerModel != null)
             {
-                var dbcon = ShoppingContextFactory.get();
-
-                Customer customer = CustomerManager.GetCustomerByEmail(registerModel.Email);
+                Customer customer = CustomerManager.GetCustomerByEmail(dbContext, registerModel.Email);
                 if (customer == null)
                 {
                     customer = new Customer
@@ -67,15 +72,15 @@ namespace WebApplication1.Controllers
                         Email = registerModel.Email,
                         Name = registerModel.Name
                     };
-                    dbcon.Customers.Add(customer);
-                    dbcon.SaveChanges();
+                    dbContext.Customers.Add(customer);
+                    dbContext.SaveChanges();
                 }
                 else
                 {
                     if (customer.Name != registerModel.Name)
                     {
                         customer.Name = registerModel.Name;
-                        dbcon.SaveChanges();
+                        dbContext.SaveChanges();
                     }
                 }
 

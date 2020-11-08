@@ -10,20 +10,24 @@ namespace WebApplication1.Controllers
 {
     public class ProductController : Controller
     {
+        private readonly DatabaseContext dbContext;
+
+        public ProductController(DatabaseContext context)
+        {
+            dbContext = context;
+        }
+
         public IActionResult Index()
         {
             ShoppingLibrary.Class1.initializeProducts();
 
-            var con = ShoppingContextFactory.get();
-            ViewData["Products"] = con.Products.ToList();
+            ViewData["Products"] = dbContext.Products.ToList();
             return View();
         }
 
         public IActionResult View(int id)
         {
-
-            var con = ShoppingContextFactory.get();
-            Product product = con.Products.Find(id);
+            Product product = dbContext.Products.Find(id);
             if (product == null)
                 return Index();
 

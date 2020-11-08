@@ -14,11 +14,13 @@ namespace WebApplication1.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
+        private readonly DatabaseContext dbContext;
+        private readonly ILogger<HomeController> logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(DatabaseContext context, ILogger<HomeController> logger)
         {
-            _logger = logger;
+            this.dbContext = context;
+            this.logger = logger;
         }
 
         public IActionResult Index()
@@ -29,9 +31,7 @@ namespace WebApplication1.Controllers
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
-                var dbcon = ShoppingContextFactory.get();
-
-                Customer c = dbcon.Customers.Find(customerId);
+                Customer c = dbContext.Customers.Find(customerId);
                 ViewData["Customer"] = c;
             }
 
@@ -54,9 +54,7 @@ namespace WebApplication1.Controllers
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
-                var dbcon = ShoppingContextFactory.get();
-
-                Customer customer = dbcon.Customers.Find(customerId);
+                Customer customer = dbContext.Customers.Find(customerId);
                 if (customer != null)
                     return true;
             }

@@ -2,6 +2,8 @@
 ..gitignore.swp
 .vs/
 *.swp
+*.csproj.user
+lib/Migrations/
 lib/obj/
 lib/bin/
 web/obj/
