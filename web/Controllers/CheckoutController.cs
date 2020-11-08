@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShoppingLibrary;
 using ShoppingLibrary.Logic;
 using ShoppingLibrary.Models;
 
@@ -11,13 +12,20 @@ namespace WebApplication1.Controllers
 {
     public class CheckoutController : Controller
     {
+        private readonly DatabaseContext dbContext;
+
+        public CheckoutController(DatabaseContext context)
+        {
+            dbContext = context;
+        }
+
         // GET: Checkout
         public ActionResult Index()
         {
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
-                CartManager cartManager = CustomerManager.GetCustomerCart((int)customerId);
+                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
                 if (cartManager != null)
                     ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
             }

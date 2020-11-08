@@ -8,21 +8,18 @@ namespace ShoppingLibrary.Logic
 {
     public class CustomerManager
     {
-        public static Customer GetCustomerById(int id)
+        public static Customer GetCustomerById(DatabaseContext db, int id)
         {
-            var db = ShoppingContextFactory.get();
             return db.Customers.Find(id);
         }
 
-        public static Customer GetCustomerByEmail(string email)
+        public static Customer GetCustomerByEmail(DatabaseContext db, string email)
         {
-            var db = ShoppingContextFactory.get();
             return db.Customers.Where(q => q.Email == email).FirstOrDefault();
         }
 
-        public static CartManager GetCustomerCart(int id)
+        public static CartManager GetCustomerCart(DatabaseContext db, int id)
         {
-            var db = ShoppingContextFactory.get();
             var customer = db.Customers.Find(id);
             if (customer != null)
                 return new CartManager(db, customer);

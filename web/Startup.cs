@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -35,6 +36,12 @@ namespace WebApplication1
             });
 
             services.AddControllersWithViews();
+
+            services.AddDbContext<DatabaseContext>(options => {
+                options.UseSqlite("Data Source=" + Configuration.GetSection("Settings").GetValue<string>("DatabaseName"));
+                //options.UseLoggerFactory(MyLoggerFactory);
+                options.UseLazyLoadingProxies();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
