@@ -10,11 +10,12 @@ using ShoppingLibrary.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class CheckoutController : Controller
+    public class CheckoutController : BaseController
     {
         private readonly DatabaseContext dbContext;
 
         public CheckoutController(DatabaseContext context)
+            : base(context)
         {
             dbContext = context;
         }
@@ -50,6 +51,7 @@ namespace WebApplication1.Controllers
             }
             return View();
         }
+
         public ActionResult PlaceOrder()
         {
             var customerId = HttpContext.Session.GetInt32("customer");

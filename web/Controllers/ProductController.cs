@@ -8,11 +8,12 @@ using ShoppingLibrary.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class ProductController : Controller
+    public class ProductController : BaseController
     {
         private readonly DatabaseContext dbContext;
 
         public ProductController(DatabaseContext context)
+            : base(context)
         {
             dbContext = context;
         }

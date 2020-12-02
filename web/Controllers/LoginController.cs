@@ -22,11 +22,12 @@ namespace WebApplication1.Controllers
         public string Name { get; set; }
     }
 
-    public class LoginController : Controller
+    public class LoginController : BaseController
     {
         private readonly DatabaseContext dbContext;
 
         public LoginController(DatabaseContext context)
+            : base(context)
 		{
             dbContext = context;
 		}
@@ -67,10 +68,13 @@ namespace WebApplication1.Controllers
                 Customer customer = CustomerManager.GetCustomerByEmail(dbContext, registerModel.Email);
                 if (customer == null)
                 {
+                    // TODO: add password w/ encryption
                     customer = new Customer
                     {
                         Email = registerModel.Email,
-                        Name = registerModel.Name
+                        Name = registerModel.Name,
+                        Password = "",
+                        IsAdmin = false
                     };
                     dbContext.Customers.Add(customer);
                     dbContext.SaveChanges();

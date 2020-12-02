@@ -39,6 +39,17 @@ namespace ShoppingLibrary
                 .HasIndex(u => u.Email)
                 .IsUnique();
 
+            #region AdminLoginSeeding
+            builder.Entity<Customer>().HasData(new Customer
+            {
+                ID = 1,
+                Name = "Administrator",
+                Email = "admin",
+                Gender = "M",
+                IsAdmin = true
+            });
+			#endregion
+
 			#region ProductSeeding
 			builder.Entity<Product>().HasData(new Product
             {

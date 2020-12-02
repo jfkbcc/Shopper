@@ -10,11 +10,12 @@ using ShoppingLibrary.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class CartController : Controller
+    public class CartController : BaseController
     {
         private readonly DatabaseContext dbContext;
 
         public CartController(DatabaseContext context)
+            : base(context)
         {
             dbContext = context;
         }

@@ -14,9 +14,13 @@ namespace ShoppingLibrary.Models
 
         public string Email { get; set; }
 
+        public string Password { get; set; }
+
         public string Gender { get; set; }
 
         public DateTime? Birthday { get; set; }
+
+        public bool IsAdmin { get; set; }
 
         //public Address BillingAddress { get; }
 

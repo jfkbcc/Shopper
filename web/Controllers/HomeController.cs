@@ -1,23 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
-using ShoppingLibrary;
+﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using WebApplication1.Models;
-using Microsoft.AspNetCore.Http;
+using ShoppingLibrary;
 using ShoppingLibrary.Models;
+using System.Diagnostics;
+using WebApplication1.Models;
 
 namespace WebApplication1.Controllers
 {
-    public class HomeController : Controller
+	public class HomeController : BaseController
     {
         private readonly DatabaseContext dbContext;
         private readonly ILogger<HomeController> logger;
 
         public HomeController(DatabaseContext context, ILogger<HomeController> logger)
+            : base(context)
         {
             this.dbContext = context;
             this.logger = logger;
