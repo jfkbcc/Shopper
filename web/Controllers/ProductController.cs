@@ -19,8 +19,6 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
-            ShoppingLibrary.Class1.initializeProducts();
-
             ViewData["Products"] = dbContext.Products.ToList();
             return View();
         }
