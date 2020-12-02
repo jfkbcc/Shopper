@@ -52,9 +52,19 @@ namespace WebApplication1.Controllers
         }
         public ActionResult PlaceOrder()
         {
-            // empty cart
-            // (charge account)
-            // show order successfully placed page
+            var customerId = HttpContext.Session.GetInt32("customer");
+            if (customerId != null)
+            {
+                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
+                if (cartManager != null)
+                {
+                    // empty cart
+                    // (charge account)
+                    // show order successfully placed page
+
+                    cartManager.EmptyCart();
+                }
+            }
 
             return View();
         }

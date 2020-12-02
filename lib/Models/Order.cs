@@ -15,6 +15,8 @@ namespace ShoppingLibrary.Models
 
         public decimal ShippingCost { get; set; }
 
+        public decimal OrderTotal { get; set; }
+
         public int CustomerID { get; set; }
 
         public virtual Customer Customer { get; set; }

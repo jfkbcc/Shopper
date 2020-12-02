@@ -86,5 +86,16 @@ namespace ShoppingLibrary.Logic
             //this.context.ShoppingCartItems.RemoveRange(this.shoppingCart.Items);
             this.context.SaveChanges();
         }
+
+        public decimal GetCartTotal()
+		{
+            // TODO: not including shipping price yet
+
+            decimal total = 0.0m;
+            foreach (var cartItem in this.shoppingCart.Items)
+                total += cartItem.Product.Price * cartItem.Quantity;
+
+            return total;
+		}
     }
 }
