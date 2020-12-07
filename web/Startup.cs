@@ -35,7 +35,9 @@ namespace WebApplication1
                 options.Cookie.IsEssential = true;
             });
 
-            services.AddControllersWithViews();
+#if DEBUG
+            services.AddControllersWithViews().AddRazorRuntimeCompilation();
+#endif
 
             services.AddDbContext<DatabaseContext>(options => {
                 options.UseSqlite("Data Source=" + Configuration.GetSection("Settings").GetValue<string>("DatabaseName"));
@@ -68,6 +70,10 @@ namespace WebApplication1
 
             app.UseEndpoints(endpoints =>
             {
+                //endpoints.MapControllerRoute(
+                //    name: "AdminUsers",
+                //    pattern: "Admin/{controller=AdminUsers}/{action=Index}/{id?}");
+
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

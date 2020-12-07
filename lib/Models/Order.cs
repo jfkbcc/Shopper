@@ -21,13 +21,12 @@ namespace ShoppingLibrary.Models
 
         public virtual Customer Customer { get; set; }
 
-        public int BillingAddressID { get; set; }
+/*        public int BillingAddressID { get; set; }
 
         public virtual Address BillingAddress { get; set; }
 
         public int ShippingAddressID { get; set; }
 
-        public virtual Address ShippingAddress { get; set; }
-
+        public virtual Address ShippingAddress { get; set; }*/
     }
 }

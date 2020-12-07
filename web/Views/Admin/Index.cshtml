@@ -1,6 +1,10 @@
 ﻿@{
     ViewData["Title"] = "Admin Panel";
 }
-<h1>@ViewData["Title"]</h1>
 
-<p>Start of an admin panel</p>
+<h5>Admin Navigation</h5>
+<ul>
+    <li><a asp-area="" asp-controller="AdminUsers" asp-action="Index">View Customers</a></li>
+    <li><a asp-area="" asp-controller="AdminOrders" asp-action="Index">View Orders</a></li>
+</ul>
+

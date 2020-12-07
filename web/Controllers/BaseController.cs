@@ -27,5 +27,19 @@ namespace WebApplication1.Controllers
 
 			base.OnActionExecuted(context);
 		}
+
+		protected bool CheckAuthentication()
+		{
+			var customerId = HttpContext.Session.GetInt32("customer");
+			if (customerId != null)
+			{
+				Customer customer = dbContext.Customers.Find(customerId);
+				if (customer != null)
+					return true;
+			}
+
+			HttpContext.Response.Redirect("/Login");
+			return false;
+		}
 	}
 }

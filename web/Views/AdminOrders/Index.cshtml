@@ -1,0 +1,33 @@
+﻿@using ShoppingLibrary.Models
+@{
+    ViewData["Title"] = "Orders - Admin Panel";
+    var orderList = (ICollection<Order>)ViewData["OrderList"];
+}
+
+<h1>Orders List</h1>
+
+@if (orderList != null && orderList.Count() > 0)
+{
+    <table border="1" width="800">
+        <tr>
+            <td width="150">Order ID</td>
+            <td width="325">Customer Name</td>
+            <td width="150">Order Total</td>
+            <td width="150">View</td>
+        </tr>
+
+        @foreach (var order in orderList)
+        {
+            <tr>
+                <td>@order.ID</td>
+                <td>@order.Customer.Name</td>
+                <td>@order.OrderTotal</td>
+                <td><a href="/Admin/Orders/@order.ID">View Order</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p class="text-center">No orders found</p>
+}

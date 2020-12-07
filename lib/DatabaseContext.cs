@@ -25,6 +25,10 @@ namespace ShoppingLibrary
 
         public virtual DbSet<ShoppingCartItem> ShoppingCartItems { get; set; }
 
+        public virtual DbSet<OrderShoppingCart> OrderShoppingCart { get; set; }
+
+        public virtual DbSet<OrderShoppingCartItem> OrderShoppingCartItems { get; set; }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<ShoppingCart>()
@@ -32,6 +36,14 @@ namespace ShoppingLibrary
                 .IsUnique();
 
             builder.Entity<ShoppingCartItem>()
+                .HasIndex(u => new { u.ID, u.ProductID })
+                .IsUnique();
+
+            builder.Entity<OrderShoppingCart>()
+                .HasIndex(u => new { u.ID, u.OrderID })
+                .IsUnique();
+
+            builder.Entity<OrderShoppingCartItem>()
                 .HasIndex(u => new { u.ID, u.ProductID })
                 .IsUnique();
 

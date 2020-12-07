@@ -45,19 +45,5 @@ namespace WebApplication1.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-
-        private bool CheckAuthentication()
-        {
-            var customerId = HttpContext.Session.GetInt32("customer");
-            if (customerId != null)
-            {
-                Customer customer = dbContext.Customers.Find(customerId);
-                if (customer != null)
-                    return true;
-            }
-
-            HttpContext.Response.Redirect("/Login");
-            return false;
-        }
     }
 }

@@ -60,10 +60,36 @@ namespace WebApplication1.Controllers
                 CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
                 if (cartManager != null)
                 {
-                    // empty cart
-                    // (charge account)
-                    // show order successfully placed page
+                    Order order = new Order
+                    {
+                        CustomerID = (int)customerId,
+                        ShippingMethod = "",
+                        ShippingCost = 0.00m,
+                        OrderTotal = cartManager.GetCartTotal()
+                    };
+                    dbContext.Orders.Add(order);
+                    dbContext.SaveChanges();
 
+                    var orderCart = new OrderShoppingCart
+                    {
+                        OrderID = order.ID
+                    };
+
+                    dbContext.OrderShoppingCart.Add(orderCart);
+                    dbContext.SaveChanges();
+
+                    var cartItems = cartManager.shoppingCart.Items;
+                    foreach (var cartItem in cartItems)
+					{
+                        dbContext.OrderShoppingCartItems.Add(new OrderShoppingCartItem
+                        {
+                            OrderShoppingCartID = orderCart.ID,
+                            ProductID = cartItem.ProductID,
+                            Quantity = cartItem.Quantity
+                        });
+                    }
+
+                    dbContext.SaveChanges();
                     cartManager.EmptyCart();
                 }
             }
