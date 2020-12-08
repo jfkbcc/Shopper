@@ -72,9 +72,6 @@ namespace WebApplication1.Controllers
                 };
                 dbContext.Products.Add(product);
                 dbContext.SaveChanges();
-
-                HttpContext.Response.Redirect("/Admin/Products/" + product.ID);
-                return;
             }
 
             HttpContext.Response.Redirect("/Admin/Products");
