@@ -28,8 +28,20 @@ namespace WebApplication1.Controllers
         [Route("/Admin/Orders/{id}")]
         public ActionResult View(int id)
         {
-            ViewData["OrderData"] = dbContext.Orders.Find(id);
-            return View("View");
+            var order = dbContext.Orders.Find(id);
+            if (order != null)
+            {
+                var cart = dbContext.OrderShoppingCart.Where(q => q.OrderID == order.ID).FirstOrDefault();
+                if (cart != null)
+                {
+                    ViewData["OrderData"] = order;
+                    ViewData["OrderCartData"] = cart.Items.ToList();
+                    return View("View");
+                }
+            }
+
+            HttpContext.Response.Redirect("/Admin/Orders");
+            return View();
         }
     }
 }

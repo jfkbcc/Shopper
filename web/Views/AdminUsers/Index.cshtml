@@ -4,16 +4,15 @@
     var customerList = (ICollection<Customer>)ViewData["CustomerList"];
 }
 
-<h1>Customer List</h1>
-
+<h4>Customer List</h4>
 
 @if (customerList != null && customerList.Count() > 0)
 {
-    <table border="1" width="800">
+    <table width="575" border="1" cellpadding="4" cellspacing="4">
         <tr>
-            <td width="150">ID</td>
-            <td width="325">Customer Name</td>
-            <td width="325">Customer Email</td>
+            <td width="125">Customer ID</td>
+            <td width="225">Customer Name</td>
+            <td width="225">Customer Email</td>
         </tr>
 
         @foreach (var customer in customerList)

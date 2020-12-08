@@ -2,25 +2,41 @@
 @{
     ViewData["Title"] = "View Order Details";
     Order order = (Order)ViewData["OrderData"];
-    //Product product = (Product)ViewData["Product"];
+    var cartItems = (ICollection<OrderShoppingCartItem>)ViewData["OrderCartData"];
 }
 
-Sold to: @order.Customer.Name<br />
-Order Test: @order.OrderTotal
+<h4>Order Details for Order # @order.ID</h4>
 
-@*<div class="text-center">
-    <h1 class="display-4">@product.Name</h1>
-</div>
+<table width="600">
+    <tr>
+        <td width="175">Customer Name:</td>
+        <td>@order.Customer.Name</td>
+    </tr>
+    <tr>
+        <td width="175">Email Address:</td>
+        <td>@order.Customer.Email</td>
+    </tr>
+</table>
 
-<div class="w-100">
-    <div class="row">
-        <div class="col-md-4">
-            <img src="@product.Image" alt="@product.Name" width="200" />
-        </div>
-        <div class="col-md-8" style="margin-top: 50px">
-            <p>@product.Description</p>
-            <p>Price: $@product.Price</p>
-        </div>
-    </div>
-</div>
-*@
+<h5 class="mt-4">Shopping Cart</h5>
+
+<table width="600" border="1" cellpadding="4" cellspacing="4">
+    <tr>
+        <td width="400">Product Name</td>
+        <td width="100">Quantity</td>
+        <td width="100">Total Cost</td>
+    </tr>
+    @foreach (var cart in cartItems)
+    {
+        <tr>
+            <td>@cart.Product.Name</td>
+            <td>@cart.Quantity</td>
+            <td>@((cart.Quantity * cart.Product.Price).ToString("C2"))</td>
+        </tr>
+    }
+    <tr>
+        <td>&nbsp;</td>
+        <td>Order Total: </td>
+        <td>@order.OrderTotal.ToString("C2")</td>
+    </tr>
+</table>

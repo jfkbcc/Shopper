@@ -1,0 +1,35 @@
+﻿@using ShoppingLibrary.Models
+@{
+    ViewData["Title"] = "Orders - Admin Panel";
+    var productList = (ICollection<Product>)ViewData["ProductList"];
+}
+
+<h4>Products List</h4>
+
+@if (productList != null && productList.Count() > 0)
+{
+    <table border="1" cellpadding="4" cellspacing="4" width="800">
+        <tr>
+            <td width="150">Product ID</td>
+            <td width="325">Product Name</td>
+            <td width="150">Order Total</td>
+            <td width="150">Edit</td>
+        </tr>
+
+        @foreach (var product in productList)
+        {
+            <tr>
+                <td>@product.ID</td>
+                <td>@product.Name</td>
+                <td>$@product.Price</td>
+                <td><a href="/Admin/Products/@product.ID">Edit Product</a></td>
+            </tr>
+        }
+    </table>
+}
+else
+{
+    <p class="text-center">No products found</p>
+}
+
+<p class="mt-4"><a href="/Admin/Products/Create">Create a New Product</a></p>

@@ -60,10 +60,19 @@ namespace ShoppingLibrary
                 Gender = "M",
                 IsAdmin = true
             });
-			#endregion
 
-			#region ProductSeeding
-			builder.Entity<Product>().HasData(new Product
+            builder.Entity<Customer>().HasData(new Customer
+            {
+                ID = 2,
+                Name = "Test Customer",
+                Email = "customer",
+                Gender = "M",
+                IsAdmin = true
+            });
+            #endregion
+
+            #region ProductSeeding
+            builder.Entity<Product>().HasData(new Product
             {
                 ID = 1,
                 Name = "Apple iPhone XR (Red, 128 GB)",
