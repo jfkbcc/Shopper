@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -34,6 +35,8 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
+            ViewData["ErrorMsg"] = HttpContext.Request.Query["err"];
+
             return View();
         }
 
@@ -57,7 +60,8 @@ namespace WebApplication1.Controllers
                 }
             }
 
-            HttpContext.Response.Redirect("/Login");
+            var errmsg = "User account does not exist, please try again.";
+            HttpContext.Response.Redirect("/Login?err=" + WebUtility.UrlEncode(errmsg));
         }
 
         [HttpPost]
