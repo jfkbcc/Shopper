@@ -67,7 +67,16 @@ namespace ShoppingLibrary
                 Name = "Test Customer",
                 Email = "customer",
                 Gender = "M",
-                IsAdmin = true
+                IsAdmin = false
+            });
+
+            builder.Entity<Customer>().HasData(new Customer
+            {
+                ID = 3,
+                Name = "Test Customer 2",
+                Email = "customer@localhost",
+                Gender = "M",
+                IsAdmin = false
             });
             #endregion
 
