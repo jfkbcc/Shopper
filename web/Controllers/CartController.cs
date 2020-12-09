@@ -33,6 +33,7 @@ namespace WebApplication1.Controllers
                     ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
             }
 
+            ViewData["ErrorMsg"] = HttpContext.Request.Query["err"];
             return View();
         }
 

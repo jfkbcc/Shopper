@@ -3,14 +3,18 @@
     ViewData["Title"] = "View Cart";
     var cartItems = (ICollection<ShoppingCartItem>)ViewData["ShoppingCart"];
 }
-    <h1>Checkout</h1>
 
-    <h2>Items</h2>
+@if (cartItems != null)
+{
+    <div class="text-center">
+        <h1 class="display-4">Order Confirmation</h1>
+    </div>
+
+    <h4>Shopping Cart</h4>
+    
     @foreach (var product in cartItems)
     {
-        <!-- list group item-->
         <li class="list-group-item">
-            <!-- Custom content-->
             <div class="media align-items-lg-center flex-column flex-lg-row p-3">
                 <div class="media-body order-2 order-lg-1">
                     <h5 class="mt-0 font-weight-bold mb-2">@product.Product.Name</h5>
@@ -19,78 +23,78 @@
                         <h6 class="font-weight-bold my-2">Quantity: @product.Quantity</h6>
                     </div>
                     <div class="d-flex align-items-center justify-content-between mt-1">
-                        <h6 class="font-weight-bold my-2">Price: $@(product.Product.Price * product.Quantity) (ea. $@product.Product.Price)</h6>
+                        <h6 class="font-weight-bold my-2">Price: @((product.Product.Price * product.Quantity).ToString("C2")) (ea. @product.Product.Price.ToString("C2"))</h6>
                     </div>
-                </div> <!-- End -->
-               </div>
-        </li> <!-- End -->
+                </div>
+            </div>
+        </li>
     }
 
 
-@*    <h2>Shipping</h2>
-    <div class="form-check mb-1">
+    @*    <h2>Shipping</h2>
         <div class="form-check mb-1">
-            <input class="form-check-input" type="radio" name="shipping" id="shippingRadio1" value="free" checked>
-            <label class="form-check-label w-100" for="shippingRadio1">
-                <div class="row">
-                    <div class="col-8">Free Economy Shipping</div>
-                    <div class="col-4 text-right">$0.00</div>
-                </div>
-            </label>
-        </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="shipping" id="shippingRadio1" value="free" checked>
+                <label class="form-check-label w-100" for="shippingRadio1">
+                    <div class="row">
+                        <div class="col-8">Free Economy Shipping</div>
+                        <div class="col-4 text-right">$0.00</div>
+                    </div>
+                </label>
+            </div>
 
-        <div class="form-check mb-1">
-            <input class="form-check-input" type="radio" name="shipping" id="shippingRadio2" value="3day">
-            <label class="form-check-label w-100" for="shippingRadio2">
-                <div class="row">
-                    <div class="col-8">3 Day Delivery</div>
-                    <div class="col-4 text-right">$6.95</div>
-                </div>
-            </label>
-        </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="shipping" id="shippingRadio2" value="3day">
+                <label class="form-check-label w-100" for="shippingRadio2">
+                    <div class="row">
+                        <div class="col-8">3 Day Delivery</div>
+                        <div class="col-4 text-right">$6.95</div>
+                    </div>
+                </label>
+            </div>
 
-        <div class="form-check mb-1">
-            <input class="form-check-input" type="radio" name="shipping" id="shippingRadio3" value="2day">
-            <label class="form-check-label w-100" for="shippingRadio3">
-                <div class="row">
-                    <div class="col-8">2 Day Delivery</div>
-                    <div class="col-4 text-right">$9.95</div>
-                </div>
-            </label>
-        </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="shipping" id="shippingRadio3" value="2day">
+                <label class="form-check-label w-100" for="shippingRadio3">
+                    <div class="row">
+                        <div class="col-8">2 Day Delivery</div>
+                        <div class="col-4 text-right">$9.95</div>
+                    </div>
+                </label>
+            </div>
 
-        <div class="form-check mb-1">
-            <input class="form-check-input" type="radio" name="shipping" id="shippingRadio4" value="1day">
-            <label class="form-check-label w-100" for="shippingRadio4">
-                <div class="row">
-                    <div class="col-8">1 Day Delivery</div>
-                    <div class="col-4 text-right">$14.95</div>
-                </div>
-            </label>
-        </div>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="shipping" id="shippingRadio4" value="1day">
+                <label class="form-check-label w-100" for="shippingRadio4">
+                    <div class="row">
+                        <div class="col-8">1 Day Delivery</div>
+                        <div class="col-4 text-right">$14.95</div>
+                    </div>
+                </label>
+            </div>
 
-        <div class="form-check mb-1">
-            <input class="form-check-input" type="radio" name="shipping" id="shippingRadio5" value="0day">
-            <label class="form-check-label w-100" for="shippingRadio5">
-                <div class="row">
-                    <div class="col-8">Same Day Delivery</div>
-                    <div class="col-4 text-right">$29.95</div>
-                </div>
-            </label>
+            <div class="form-check mb-1">
+                <input class="form-check-input" type="radio" name="shipping" id="shippingRadio5" value="0day">
+                <label class="form-check-label w-100" for="shippingRadio5">
+                    <div class="row">
+                        <div class="col-8">Same Day Delivery</div>
+                        <div class="col-4 text-right">$29.95</div>
+                    </div>
+                </label>
+            </div>
         </div>
-    </div>
-*@
+    *@
 
-@{ decimal total = 0;
+    decimal total = 0;
     foreach (var product in cartItems)
     {
         total += product.Product.Price * product.Quantity;
     }
-    <h2>Grand total: @total</h2>
+
+    <h5 class="mt-4 mb-4">Order Total: @(total.ToString("C2"))</h5>
+
+    <form method="post" action="/Checkout/PlaceOrder">
+        <button class="btn btn-primary btn-lg btn-block" type="submit"> Place order </button>
+    </form>
+
 }
-
-
-<form method="post" action="/Checkout/PlaceOrder">
-    <button class="btn btn-primary btn-lg btn-block" type="submit"> Place order </button>
-</form>
-

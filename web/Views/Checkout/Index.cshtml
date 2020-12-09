@@ -4,12 +4,14 @@
     var cartItems = (ICollection<ShoppingCartItem>)ViewData["ShoppingCart"];
 }
 
-<h1>Checkout Page</h1>
-
-<h2>Items in cart</h2>
+<div class="text-center">
+    <h1 class="display-4">Customer Checkout</h1>
+</div>
 
 @if (cartItems != null && cartItems.Count() > 0)
 {
+    <h4>Shopping Cart</h4>
+
     @foreach (var product in cartItems)
     {
         <ul class="list-group shadow mb-2 w-100" onclick="gotoProductPage(@product.ProductID); return;">

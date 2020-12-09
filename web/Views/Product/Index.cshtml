@@ -33,7 +33,7 @@
                             <h5 class="mt-0 font-weight-bold mb-2">@product.Name</h5>
                             <p class="font-italic text-muted mb-0 small">@product.Description</p>
                             <div class="d-flex align-items-center justify-content-between mt-1">
-                                <h6 class="font-weight-bold my-2">$@product.Price</h6>
+                                <h6 class="font-weight-bold my-2">@product.Price.ToString("C2")</h6>
                             </div>
                         </div><img src="@product.Image" alt="@product.Name" width="200" class="ml-lg-5 order-1 order-lg-2">
                     </div> <!-- End -->

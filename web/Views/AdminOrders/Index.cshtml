@@ -4,7 +4,7 @@
     var orderList = (ICollection<Order>)ViewData["OrderList"];
 }
 
-<h1>Orders List</h1>
+<h4>Orders List</h4>
 
 @if (orderList != null && orderList.Count() > 0)
 {
@@ -21,7 +21,7 @@
             <tr>
                 <td>@order.ID</td>
                 <td>@order.Customer.Name</td>
-                <td>$@order.OrderTotal</td>
+                <td>@order.OrderTotal.ToString("C2")</td>
                 <td><a href="/Admin/Orders/@order.ID">View Order</a></td>
             </tr>
         }

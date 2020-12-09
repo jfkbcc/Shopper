@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -13,6 +14,7 @@ namespace WebApplication1.Controllers
     public class CheckoutController : BaseController
     {
         private readonly DatabaseContext dbContext;
+        private CartManager cartManager;
 
         public CheckoutController(DatabaseContext context)
             : base(context)
@@ -20,150 +22,92 @@ namespace WebApplication1.Controllers
             dbContext = context;
         }
 
-        // GET: Checkout
-        public ActionResult Index()
-        {
+        private bool ValidateShoppingCart()
+		{
+            // Ensure customer is logged in
+            if (!CheckAuthentication())
+                return false;
+
+            //
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
-                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
-                if (cartManager != null)
-                    ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
-            }
-
-            return View();
-        }
-
-        // GET: Checkout/Details/5
-        public ActionResult Details(int id)
-        {
-            return View();
-        }
-
-        public ActionResult Confirm()
-        {
-            var customerId = HttpContext.Session.GetInt32("customer");
-            if (customerId != null)
-            {
-                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
-                if (cartManager != null)
-                    ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
-            }
-            return View();
-        }
-
-        public ActionResult PlaceOrder()
-        {
-            var customerId = HttpContext.Session.GetInt32("customer");
-            if (customerId != null)
-            {
-                CartManager cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
+                cartManager = CustomerManager.GetCustomerCart(dbContext, (int)customerId);
                 if (cartManager != null)
                 {
-                    Order order = new Order
-                    {
-                        CustomerID = (int)customerId,
-                        ShippingMethod = "",
-                        ShippingCost = 0.00m,
-                        OrderTotal = cartManager.GetCartTotal()
-                    };
-                    dbContext.Orders.Add(order);
-                    dbContext.SaveChanges();
-
-                    var orderCart = new OrderShoppingCart
-                    {
-                        OrderID = order.ID
-                    };
-
-                    dbContext.OrderShoppingCart.Add(orderCart);
-                    dbContext.SaveChanges();
-
-                    var cartItems = cartManager.shoppingCart.Items;
-                    foreach (var cartItem in cartItems)
+                    if (cartManager.shoppingCart.Items.Count < 1)
 					{
-                        dbContext.OrderShoppingCartItems.Add(new OrderShoppingCartItem
-                        {
-                            OrderShoppingCartID = orderCart.ID,
-                            ProductID = cartItem.ProductID,
-                            Quantity = cartItem.Quantity
-                        });
+                        string errorMessage = "You must have items in your shopping cart to checkout!";
+                        HttpContext.Response.Redirect("/Cart?err=" + WebUtility.UrlEncode(errorMessage));
+                        return false;
                     }
 
-                    dbContext.SaveChanges();
-                    cartManager.EmptyCart();
+                    return true;
                 }
             }
 
-            return View();
+            return false;
         }
 
-        // GET: Checkout/Create
-        public ActionResult Create()
+        // GET: Checkout
+        public ActionResult Index()
         {
-            return View();
-        }
-
-        // POST: Checkout/Create
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            if (!ValidateShoppingCart())
                 return View();
-            }
-        }
 
-        // GET: Checkout/Edit/5
-        public ActionResult Edit(int id)
-        {
+            ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
             return View();
         }
 
-        // POST: Checkout/Edit/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        // GET: Confirm
+        public ActionResult Confirm()
         {
-            try
-            {
-                // TODO: Add update logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            if (!ValidateShoppingCart())
                 return View();
-            }
-        }
 
-        // GET: Checkout/Delete/5
-        public ActionResult Delete(int id)
-        {
+            ViewData["ShoppingCart"] = cartManager.shoppingCart.Items.ToList();
             return View();
         }
 
-        // POST: Checkout/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        // GET: PlaceOrder
+        public ActionResult PlaceOrder()
         {
-            try
-            {
-                // TODO: Add delete logic here
-
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
+            if (!ValidateShoppingCart())
                 return View();
+
+            Order order = new Order
+            {
+                CustomerID = cartManager.customer.ID,
+                ShippingMethod = "",
+                ShippingCost = 0.00m,
+                OrderTotal = cartManager.GetCartTotal()
+            };
+            dbContext.Orders.Add(order);
+            dbContext.SaveChanges();
+
+            var orderCart = new OrderShoppingCart
+            {
+                OrderID = order.ID
+            };
+
+            dbContext.OrderShoppingCart.Add(orderCart);
+            dbContext.SaveChanges();
+
+            var cartItems = cartManager.shoppingCart.Items;
+            foreach (var cartItem in cartItems)
+			{
+                dbContext.OrderShoppingCartItems.Add(new OrderShoppingCartItem
+                {
+                    OrderShoppingCartID = orderCart.ID,
+                    ProductID = cartItem.ProductID,
+                    Quantity = cartItem.Quantity
+                });
             }
+
+            dbContext.SaveChanges();
+            cartManager.EmptyCart();
+
+            return View();
         }
     }
 }

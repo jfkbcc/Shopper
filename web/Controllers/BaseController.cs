@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Filters;
 using ShoppingLibrary;
 using ShoppingLibrary.Models;
+using System.Net;
 
 namespace WebApplication1.Controllers
 {
@@ -28,7 +29,7 @@ namespace WebApplication1.Controllers
 			base.OnActionExecuted(context);
 		}
 
-		protected bool CheckAuthentication()
+		protected bool CheckAuthentication(bool withError = true)
 		{
 			var customerId = HttpContext.Session.GetInt32("customer");
 			if (customerId != null)
@@ -38,7 +39,15 @@ namespace WebApplication1.Controllers
 					return true;
 			}
 
-			HttpContext.Response.Redirect("/Login");
+			if (withError)
+			{
+				string errorLoginMsg = "You must be logged in!";
+				HttpContext.Response.Redirect("/Login?err=" + WebUtility.UrlEncode(errorLoginMsg));
+			}
+			else
+			{
+				HttpContext.Response.Redirect("/Login");
+			}
 			return false;
 		}
 	}

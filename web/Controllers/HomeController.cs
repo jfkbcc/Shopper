@@ -22,7 +22,7 @@ namespace WebApplication1.Controllers
 
         public IActionResult Index()
         {
-            if (!CheckAuthentication())
+            if (!CheckAuthentication(false))
                 return View();
 
             var customerId = HttpContext.Session.GetInt32("customer");
