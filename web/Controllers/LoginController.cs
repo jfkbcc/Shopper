@@ -82,19 +82,17 @@ namespace WebApplication1.Controllers
                     };
                     dbContext.Customers.Add(customer);
                     dbContext.SaveChanges();
+
+                    HttpContext.Session.SetInt32("customer", customer.ID);
+                    HttpContext.Response.Redirect("/Home");
+                    return;
                 }
                 else
                 {
-                    if (customer.Name != registerModel.Name)
-                    {
-                        customer.Name = registerModel.Name;
-                        dbContext.SaveChanges();
-                    }
+                    var errmsg = "An account with that email address already exists, please try logging in.";
+                    HttpContext.Response.Redirect("/Login?err=" + WebUtility.UrlEncode(errmsg));
+                    return;
                 }
-
-                HttpContext.Session.SetInt32("customer", customer.ID);
-                HttpContext.Response.Redirect("/Home");
-                return;
             }
 
             HttpContext.Response.Redirect("/Login");
