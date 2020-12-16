@@ -97,5 +97,45 @@ namespace ShoppingLibrary.Logic
 
             return total;
 		}
+
+        public bool CreateOrderFromCart()
+		{
+            if (this.shoppingCart.Items.Count < 1)
+                return false;
+
+            // Create a new order
+            Order order = new Order
+            {
+                CustomerID = customer.ID,
+                ShippingMethod = "",
+                ShippingCost = 0.00m,
+                OrderTotal = GetCartTotal()
+            };
+            this.context.Orders.Add(order);
+            this.context.SaveChanges();
+
+            // Make a copy of the current shopping cart for the order
+            var orderCart = new OrderShoppingCart
+            {
+                OrderID = order.ID
+            };
+
+            this.context.OrderShoppingCart.Add(orderCart);
+            this.context.SaveChanges();
+
+            foreach (var cartItem in shoppingCart.Items)
+            {
+                this.context.OrderShoppingCartItems.Add(new OrderShoppingCartItem
+                {
+                    OrderShoppingCartID = orderCart.ID,
+                    ProductID = cartItem.ProductID,
+                    Quantity = cartItem.Quantity
+                });
+            }
+
+            this.context.SaveChanges();
+            EmptyCart();
+            return true;
+        }
     }
 }

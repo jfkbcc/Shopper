@@ -28,7 +28,7 @@ namespace WebApplication1.Controllers
             if (!CheckAuthentication())
                 return false;
 
-            //
+            // Make sure the customer has a valid shopping cart (with items in it)
             var customerId = HttpContext.Session.GetInt32("customer");
             if (customerId != null)
             {
@@ -75,37 +75,8 @@ namespace WebApplication1.Controllers
             if (!ValidateShoppingCart())
                 return View();
 
-            Order order = new Order
-            {
-                CustomerID = cartManager.customer.ID,
-                ShippingMethod = "",
-                ShippingCost = 0.00m,
-                OrderTotal = cartManager.GetCartTotal()
-            };
-            dbContext.Orders.Add(order);
-            dbContext.SaveChanges();
-
-            var orderCart = new OrderShoppingCart
-            {
-                OrderID = order.ID
-            };
-
-            dbContext.OrderShoppingCart.Add(orderCart);
-            dbContext.SaveChanges();
-
-            var cartItems = cartManager.shoppingCart.Items;
-            foreach (var cartItem in cartItems)
-			{
-                dbContext.OrderShoppingCartItems.Add(new OrderShoppingCartItem
-                {
-                    OrderShoppingCartID = orderCart.ID,
-                    ProductID = cartItem.ProductID,
-                    Quantity = cartItem.Quantity
-                });
-            }
-
-            dbContext.SaveChanges();
-            cartManager.EmptyCart();
+            // Create a new order for the customer
+            cartManager.CreateOrderFromCart();
 
             return View();
         }
